@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { selectorsAuth } from '../../redux/auth';
 import s from './AllNavigation.module.css';
 
-const Navigation = ({ isAuthenticated }) => {
-  console.log(isAuthenticated);
+export default function Navigation() {
+  const isAuthenticated = useSelector(selectorsAuth.getToken);
   return (
     <nav>
       <NavLink to="/" exact className={s.link} activeClassName={s.activeLink}>
@@ -24,10 +24,4 @@ const Navigation = ({ isAuthenticated }) => {
       )}
     </nav>
   );
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: selectorsAuth.getToken(state),
-});
-
-export default connect(mapStateToProps, null)(Navigation);
+}

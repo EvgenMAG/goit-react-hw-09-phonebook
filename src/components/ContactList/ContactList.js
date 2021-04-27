@@ -1,54 +1,34 @@
-import React from 'react';
 import s from './ContactList.module.css';
-import ProtoTypes from 'prop-types';
-import { connect } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { Operations, Selectors } from '../../redux/contacts';
-import { Component } from 'react';
+import React, { useEffect } from 'react';
 
-class ContactList extends Component {
-  componentDidMount() {
-    this.props.initContacts();
-  }
+export default function ContactList() {
+  const initContacts = useDispatch();
+  useEffect(() => {
+    initContacts(Operations.getContacts());
+  }, [initContacts]);
 
-  render() {
-    return (
-      <ul className={s.contact__list}>
-        {this.props.searchedName.map(({ id, name, number }) => {
-          return (
-            <li key={id} className={s.contact__item}>
-              <span className={s.contact__text}>{name}: </span>
-              <span className={s.contact__text}>{number}</span>
-              <button
-                className={s.contact__button}
-                onClick={() => this.props.removeContact(id)}
-              >
-                Delete
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+  const removeContact = useDispatch();
+  const searchedName = useSelector(Selectors.getSearchedContacts);
+
+  return (
+    <ul className={s.contact__list}>
+      {searchedName.map(({ id, name, number }) => {
+        return (
+          <li key={id} className={s.contact__item}>
+            <span className={s.contact__text}>{name}: </span>
+            <span className={s.contact__text}>{number}</span>
+            <button
+              className={s.contact__button}
+              onClick={() => removeContact(id)}
+            >
+              Delete
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
 }
-
-const mapStateToProps = state => ({
-  searchedName: Selectors.getSearchedContacts(state),
-});
-
-const mapDispatchToProps = {
-  removeContact: Operations.deleteContact,
-  initContacts: Operations.getContacts,
-};
-
-ContactList.protoTypes = {
-  searchedName: ProtoTypes.shape({
-    id: ProtoTypes.string.isRequired,
-    name: ProtoTypes.string.isRequired,
-    number: ProtoTypes.number.isRequired,
-  }),
-  removeContact: ProtoTypes.func.isRequired,
-  initContacts: ProtoTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

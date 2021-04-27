@@ -11,7 +11,7 @@ import {
   getContactsError,
 } from './contacts-actions';
 
-axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 const getContacts = () => async dispatch => {
   dispatch(getContactsRequest());

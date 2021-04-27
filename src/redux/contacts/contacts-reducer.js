@@ -10,9 +10,8 @@ import {
   getContactsError,
   filterContacts,
 } from './contacts-actions';
-// import { combineReducers } from 'redux';
+
 import { createReducer } from '@reduxjs/toolkit';
-// import actionsTypes from './contacts-types';
 
 const initialState = [];
 
@@ -42,7 +41,6 @@ const filterReducer = createReducer(initialFilter, {
   [filterContacts]: (_, { payload }) => payload,
 });
 
-// };
 const reducers = { itemsReducers, filterReducer, loading };
 
 export default reducers;
