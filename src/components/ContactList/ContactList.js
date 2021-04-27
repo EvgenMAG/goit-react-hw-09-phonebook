@@ -10,8 +10,11 @@ export default function ContactList() {
     initContacts(Operations.getContacts());
   }, [initContacts]);
 
-  const removeContact = useDispatch();
+  const dispatch = useDispatch();
   const searchedName = useSelector(Selectors.getSearchedContacts);
+  const removeContact = id => {
+    dispatch(Operations.deleteContact(id));
+  };
 
   return (
     <ul className={s.contact__list}>
