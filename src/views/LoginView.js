@@ -5,12 +5,12 @@ import { useDispatch } from 'react-redux';
 import s from './views.module.css';
 
 export default function RegisterView() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({ email: '', password: '' });
+  const { email, password } = user;
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
-    return name === 'email' ? setEmail(value) : setPassword(value);
+    setUser(prevState => ({ ...prevState, [name]: value }));
   };
 
   const disputch = useDispatch();
@@ -22,8 +22,7 @@ export default function RegisterView() {
   };
 
   const reset = () => {
-    setEmail('');
-    setPassword('');
+    setUser({ email: '', password: '' });
   };
 
   return (

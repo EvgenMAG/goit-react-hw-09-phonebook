@@ -5,22 +5,22 @@ import { useDispatch } from 'react-redux';
 import s from './views.module.css';
 
 export default function RegisterView() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({ name: '', email: '', password: '' });
+  const { name, email, password } = user;
+
   const disputch = useDispatch();
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
     switch (name) {
       case 'name':
-        setName(value);
+        setUser(prevState => ({ ...prevState, [name]: value }));
         break;
       case 'email':
-        setEmail(value);
+        setUser(prevState => ({ ...prevState, [name]: value }));
         break;
       case 'password':
-        setPassword(value);
+        setUser(prevState => ({ ...prevState, [name]: value }));
         break;
       default:
         console.log("There aren't such data");
@@ -34,9 +34,7 @@ export default function RegisterView() {
   };
 
   const reset = () => {
-    setName('');
-    setEmail('');
-    setPassword('');
+    setUser({ name: '', email: '', password: '' });
   };
 
   return (

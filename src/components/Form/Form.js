@@ -5,12 +5,12 @@ import { Operations, Selectors } from '../../redux/contacts';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Form() {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [user, setUser] = useState({ name: '', number: '' });
+  const { name, number } = user;
 
   const handleInput = evt => {
     const { name, value } = evt.currentTarget;
-    return name === 'name' ? setName(value) : setNumber(value);
+    setUser(prevState => ({ ...prevState, [name]: value }));
   };
   const disputch = useDispatch();
   const contacts = useSelector(Selectors.getAllContacts);
@@ -31,8 +31,7 @@ export default function Form() {
   };
 
   const reset = () => {
-    setName('');
-    setNumber('');
+    setUser({ name: '', number: '' });
   };
 
   return (
